@@ -4,7 +4,7 @@ def register(hook, order=0):
     def register_callback(func):
         _callbacks.setdefault(hook,{}).setdefault(order,[]).append(func)
         return func
-    return register
+    return register_callback
 
 def event(hook, *args):
     for order in sorted(_callbacks.get(hook, {})):
