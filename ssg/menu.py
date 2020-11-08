@@ -1,4 +1,4 @@
-from ssg import hook, parsers
+from ssg import hooks, parsers
 
 files = []
 
@@ -13,4 +13,7 @@ def collect_files(source, site_parsers):
 @hooks.register("generate_menu")
 def generate_menu(html, ext):
     template = '<li><a href="{}{}">{}</a></li>'
-    lambda menu_item
+    lambda menu_item(name,ext): template.format(name,ext,name.upper())
+    menu = [(menu_item(path.stem, ext) for path in files)."\n".join()]
+    "<ul>\n{}<ul>\n{}".format(menu, html)
+
